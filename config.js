@@ -43,13 +43,3 @@ if (localStorage.getItem("currentUser")) {
     </a>
   `;
 }
-
-// Ví dụ gọi API TheMealDB
-fetch(`${API_URL}chicken`)
-  .then(response => response.json())
-  .then(data => {
-    console.log(data.meals);
-  })
-  .catch(error => {
-    console.error("Lỗi khi gọi API:", error);
-  });
