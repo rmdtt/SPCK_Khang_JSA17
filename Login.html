@@ -8,8 +8,34 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <img src="Img/Login_bg.png" alt="#">
+    <div class="form-wrapper">
+        <h2>Log in</h2>
+        <form action="#">
+            <div class="form-control">
+                <input id="email" type="text" required>
+                <label for="email">Email address</label>
+            </div>
+
+            <div class="form-control">
+                <input id="password" type="password" required>
+                <label for="password">Password</label>
+            </div>
+
+            <button type="submit">Log in</button>
+
+            <div class="form-help">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember-me">Remember me</label>
+                </div>
+            </div>
+            <a href="#">Need help?</a>
+        </form>
+        <p>
+            Creat new account?
+            <a href="Signup.html">Sign up now</a>
+        </p>
     </div>
+    <script src="Login.js"></script>
 </body>
 </html>
