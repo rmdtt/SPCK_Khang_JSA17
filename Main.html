@@ -11,7 +11,12 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <a href="Main.html">🍳 CookBook</a>
+            <a href="Main.html">CookBook</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Tìm món ăn...">
+            <button>Search</button>
         </div>
 
         <ul class="nav-links">
@@ -19,9 +24,15 @@
             <li><a href="recipes.html">Recipes</a></li>
         </ul>
 
-        <div class="nav-right">
-            <input type="text" placeholder="Tìm món ăn...">
-            <button>Search</button>
+        <div class="container">
+            <div class="account">
+                <img id="avatar" src="Img/Avatar.png" alt="Avatar">
+                <input type="file" id="avatarInput" accept="image/*" hidden>
+            </div>
+            <div class="dropdown" id="dropdown">
+                    <label for="avatarInput">Đổi ảnh đại diện</label>
+                    <button id="logoutBtn">Đăng xuất</button>
+            </div>
         </div>
     </nav>
     <div class="Background">
