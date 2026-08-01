@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Main.css">
-    <title>Main</title>
+    <link rel="stylesheet" href="Detail-meals.css">
+    <title>Details</title>
 </head>
 
 <body>
@@ -37,19 +37,25 @@
             </div>
         </div>
     </nav>
-    <div class="comment">
-        <h1>Welcome to CookBook!</h1>
-        <h2>We have a lot of recipes of meals around the world there</h2>
-    </div>
-    <div class="container-random-meals">
-        <h2>Random meals</h2>
-    <div class="random-meals" id="randomMeals"></div>
-    </div>
+
+
     <div class="Background">
-        <img src="Img/Main_bg.png" alt="#">
+        <img id="backgroundImage">
+        <div class="container-details">
+            <div class="meal-detail">
+                <h1 id="mealName"></h1>
+                <img id="mealImage" alt="Meal Image">
+            </div>
+        </div>
+
+
+        <div class="Ingredients">
+            <div id="ingredientList">
+            </div>
+        </div>
     </div>
     <script src="config.js"></script>
-    <script src="Main.js"></script>
+    <script src="Detail-meals.js"></script>
 </body>
 
 </html>

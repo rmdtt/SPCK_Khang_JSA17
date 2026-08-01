@@ -9,17 +9,24 @@ body {
 }
 
 .Background {
-    margin: 0;
-    min-height: 100vh;
     position: relative;
+    min-height: 100vh;
 }
 
 .Background::before {
     content: "";
-    position: fixed;
+    position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
-    z-index: -1;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.Background img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
 }
 
 .navbar {
@@ -137,19 +144,6 @@ body {
     background-color: rgb(54, 54, 54);
 }
 
-.Background img{
-    width:100%;
-    height:100vh;
-    object-fit:cover;
-}
-
-.navbar{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:1000;
-}
-
 .container {
     position: relative;
     display: flex;
@@ -172,4 +166,101 @@ body {
     font-weight: 500;
     white-space: nowrap;
     user-select: none;
+    transition: color 0.3s;
+}
+
+.comment {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+    width: 100%;
+}
+
+.comment h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.comment h2 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.container-random-meals {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90%;
+    max-width: 1400px;
+    height: 320px;
+
+    padding: 20px;
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+
+    z-index: 10;
+}
+
+.container-random-meals h2 {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.random-meals {
+    display: flex;
+    gap: 20px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    height: 220px;
+    padding-bottom: 10px;
+
+    background: transparent;
+}
+
+.random-meals::-webkit-scrollbar {
+    height: 8px;
+}
+
+.random-meals::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.random-meals::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.meal-card {
+    flex: 0 0 220px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.12);
+    transition: transform 0.3s ease;
+}
+
+.meal-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.meal-card h3 {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.meal-card:hover {
+    transform: scale(1.05);
 }
