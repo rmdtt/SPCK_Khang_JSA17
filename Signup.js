@@ -29,6 +29,13 @@ form.addEventListener("submit", (e) => {
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
+    let existedUsername = users.find(user => user.username === username);
+
+    if (existedUsername) {
+        alert("Username already exists!");
+        return;
+    }
+
     let existedEmail = users.find(user => user.email === email);
 
     if (existedEmail) {

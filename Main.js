@@ -1,3 +1,11 @@
+const username = document.getElementById("username");
+
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (currentUser) {
+    username.textContent = currentUser.username;
+}
+
 if (!localStorage.getItem("currentUser")) {
     location.href = "Login.html";
 }
