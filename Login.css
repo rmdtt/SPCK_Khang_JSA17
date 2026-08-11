@@ -100,7 +100,7 @@ form button {
   width: 100%;
   padding: 16px 0;
   font-size: 1rem;
-  background: rgb(0, 225, 0);
+  background: rgb(255, 140, 0);
   color: #fff;
   font-weight: 500;
   border-radius: 4px;
@@ -112,7 +112,7 @@ form button {
 }
 
 form button:hover {
-  background: rgba(0, 225, 0, 0.666);
+  background: rgba(255, 140, 0, 0.832);
 }
 
 .form-wrapper a {

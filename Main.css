@@ -70,14 +70,14 @@ body {
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
-    background: rgb(0, 225, 0);
+    background: rgb(255, 140, 0);
     color: white;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .search-box button:hover {
-    background: rgba(0, 225, 0, 0.7);
+    background: rgba(255, 140, 0, 0.832);
 }
 
 .nav-links {
@@ -96,7 +96,7 @@ body {
 }
 
 .nav-links a:hover {
-    color: rgb(0, 225, 0);
+    color: rgb(255, 140, 0);
 }
 
 .account img {
@@ -106,7 +106,7 @@ body {
     object-fit: cover;
     object-position: center;
     display: block;
-    border: 2px solid rgb(0, 225, 0);
+    border: 2px solid rgb(255, 140, 0);
     cursor: pointer;
 }
 
@@ -198,7 +198,7 @@ body {
 
     width: 90%;
     max-width: 1400px;
-    height: 320px;
+    height: 380px;
 
     padding: 20px;
     border-radius: 16px;
@@ -222,7 +222,7 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
 
-    height: 220px;
+    height: 300x;
     padding-bottom: 10px;
 
     background: transparent;
