@@ -4,33 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Detail</title>
     <link rel="stylesheet" href="Detail-meals.css">
-    <title>Details</title>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="logo">
-            <a href="Main.html">CookBook</a>
-        </div>
-
+        <div class="logo"><a href="Main.html">CookBook</a></div>
         <div class="search-box">
             <input type="text" placeholder="Tìm món ăn...">
             <button>Search</button>
         </div>
-
         <ul class="nav-links">
             <li><a href="Main.html">Main</a></li>
             <li><a href="Recipes.html">Recipes</a></li>
         </ul>
-
         <div class="container">
             <div class="account">
                 <span id="username"></span>
                 <img id="avatar" src="Img/Avatar.png" alt="Avatar">
                 <input type="file" id="avatarInput" accept="image/*" hidden>
             </div>
-
             <div class="dropdown" id="dropdown">
                 <label for="avatarInput">Đổi ảnh đại diện</label>
                 <button id="logoutBtn">Đăng xuất</button>
@@ -38,23 +32,50 @@
         </div>
     </nav>
 
-
     <div class="Background">
-        <img id="backgroundImage">
-        <div class="container-details">
-            <div class="meal-detail">
-                <h1 id="mealName"></h1>
-                <img id="mealImage" alt="Meal Image">
-            </div>
-        </div>
+        <img id="backgroundImage" alt="Background">
+    </div>
 
+    <div class="container-details">
+
+        <div class="meal-detail">
+            <h1 id="mealName"></h1>
+            <img id="mealImage" alt="Meal Image">
+        </div>
 
         <div class="Ingredients">
             <h2>Ingredients</h2>
-            <div id="ingredientList">
+            <div id="ingredientList"></div>
+        </div>
+
+    </div>
+
+    <div class="Instructions">
+        <h2>Instructions</h2>
+        <div id="instructionList"></div>
+    </div>
+
+    <div class="Review-section">
+        <div class="Comment-box">
+            <div class="comment-header">
+                <h2>Comment</h2>
+                <button id="favoriteBtn">♡ Yêu thích</button>
             </div>
+
+            <textarea id="commentInput" placeholder="Viết bình luận..."></textarea>
+
+            <button id="commentBtn">Bình luận</button>
+
+            <div id="commentList"></div>
         </div>
     </div>
+
+    <footer class="footer">
+        <h2>CookBook</h2>
+        <p>Chia sẻ công thức, khám phá món ăn.</p>
+        <p>© 2026 CookBook. All rights reserved.</p>
+    </footer>
+
     <script src="config.js"></script>
     <script src="Detail-meals.js"></script>
 </body>

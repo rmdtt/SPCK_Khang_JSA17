@@ -12,9 +12,7 @@ if (!localStorage.getItem("currentUser")) {
     location.href = "Login.html";
 }
 
-const currentUser = JSON.parse(
-    localStorage.getItem("currentUser")
-);
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
 if (currentUser) {
     username.textContent = currentUser.username;
@@ -26,16 +24,13 @@ if (savedAvatar) {
     avatar.src = savedAvatar;
 }
 
-container.addEventListener("click", (e) => {
+container.addEventListener("click", e => {
     if (!e.target.closest("#dropdown")) {
-        dropdown.style.display =
-            dropdown.style.display === "block"
-                ? "none"
-                : "block";
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 });
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", e => {
     if (!e.target.closest(".container")) {
         dropdown.style.display = "none";
     }
@@ -48,13 +43,9 @@ avatarInput.addEventListener("change", function () {
 
     const reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = e => {
         avatar.src = e.target.result;
-
-        localStorage.setItem(
-            "avatar",
-            e.target.result
-        );
+        localStorage.setItem("avatar", e.target.result);
     };
 
     reader.readAsDataURL(file);
@@ -63,7 +54,6 @@ avatarInput.addEventListener("change", function () {
 logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("currentUser");
     sessionStorage.clear();
-
     location.href = "Login.html";
 });
 
@@ -72,201 +62,243 @@ if (!mealId) {
     location.href = "Main.html";
 }
 
-fetch(
-    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
-)
-    .then(response => response.json())
-    .then(data => {
+fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
+.then(response => response.json())
+.then(data => {
+    if (!data.meals) {
+        alert("Không tìm thấy món ăn");
+        return;
+    }
 
-        if (!data.meals) {
-            alert("Không tìm thấy món ăn");
-            return;
-        }
+    const meal = data.meals[0];
 
-        const meal = data.meals[0];
+    const mealImage = document.getElementById("mealImage");
+    const mealName = document.getElementById("mealName");
+    const backgroundImage = document.getElementById("backgroundImage");
+    const ingredientList = document.getElementById("ingredientList");
+    const instructionList = document.getElementById("instructionList");
 
-        const mealImage =
-            document.getElementById("mealImage");
+    mealImage.src = meal.strMealThumb;
+    mealImage.alt = meal.strMeal;
+    mealName.textContent = meal.strMeal;
+    backgroundImage.src = meal.strMealThumb;
 
-        const mealName =
-            document.getElementById("mealName");
+    ingredientList.innerHTML = "";
 
-        const backgroundImage =
-            document.getElementById("backgroundImage");
+    for (let i = 1; i <= 20; i++) {
+        const ingredient = meal[`strIngredient${i}`];
+        const measure = meal[`strMeasure${i}`];
 
-        const ingredientList =
-            document.getElementById("ingredientList");
+        if (ingredient && ingredient.trim() !== "") {
+            const item = document.createElement("div");
 
-        mealImage.src = meal.strMealThumb;
-        mealImage.alt = meal.strMeal;
+            item.className = "ingredient-item";
+            item.dataset.name = ingredient.trim();
+            item.dataset.measure = measure ? measure.trim() : "";
 
-        mealName.textContent = meal.strMeal;
+            const img = document.createElement("img");
 
-        backgroundImage.src = meal.strMealThumb;
+            img.src = `https://www.themealdb.com/images/ingredients/${encodeURIComponent(ingredient.trim())}.png`;
+            img.alt = ingredient.trim();
 
-        ingredientList.innerHTML = "";
+            item.appendChild(img);
+            ingredientList.appendChild(item);
 
-        for (let i = 1; i <= 20; i++) {
+            item.addEventListener("mouseenter", function () {
+                const tooltip = document.createElement("div");
 
-            const ingredient =
-                meal[`strIngredient${i}`];
+                tooltip.className = "ingredient-tooltip";
 
-            const measure =
-                meal[`strMeasure${i}`];
+                tooltip.textContent = this.dataset.measure
+                    ? `${this.dataset.name} - ${this.dataset.measure}`
+                    : this.dataset.name;
 
-            if (
-                ingredient &&
-                ingredient.trim() !== ""
-            ) {
+                document.body.appendChild(tooltip);
 
-                const ingredientItem =
-                    document.createElement("div");
+                const rect = this.getBoundingClientRect();
 
-                ingredientItem.className =
-                    "ingredient-item";
+                let left = rect.left + rect.width / 2;
+                let top = rect.bottom + 10;
 
-                ingredientItem.dataset.name =
-                    ingredient.trim();
+                tooltip.style.left = `${left}px`;
+                tooltip.style.top = `${top}px`;
+                tooltip.style.transform = "translateX(-50%)";
 
-                ingredientItem.dataset.measure =
-                    measure ? measure.trim() : "";
+                const tooltipRect = tooltip.getBoundingClientRect();
 
-                const ingredientImage =
-                    document.createElement("img");
+                if (tooltipRect.left < 10) {
+                    left = 10 + tooltipRect.width / 2;
+                }
 
-                ingredientImage.src =
-                    `https://www.themealdb.com/images/ingredients/${encodeURIComponent(
-                        ingredient.trim()
-                    )}.png`;
+                if (tooltipRect.right > window.innerWidth - 10) {
+                    left = window.innerWidth - 10 - tooltipRect.width / 2;
+                }
 
-                ingredientImage.alt =
-                    ingredient.trim();
+                if (tooltipRect.bottom > window.innerHeight - 10) {
+                    top = rect.top - tooltipRect.height - 10;
+                }
 
-                ingredientItem.appendChild(
-                    ingredientImage
-                );
+                tooltip.style.left = `${left}px`;
+                tooltip.style.top = `${top}px`;
 
-                ingredientList.appendChild(
-                    ingredientItem
-                );
-            }
-        }
-
-        document
-            .querySelectorAll(".ingredient-item")
-            .forEach(item => {
-
-                item.addEventListener(
-                    "mouseenter",
-                    function () {
-
-                        const name =
-                            this.dataset.name;
-
-                        const measure =
-                            this.dataset.measure;
-
-                        const tooltip =
-                            document.createElement("div");
-
-                        tooltip.className =
-                            "ingredient-tooltip";
-
-                        tooltip.textContent =
-                            measure
-                                ? `${name} - ${measure}`
-                                : name;
-
-                        document.body.appendChild(
-                            tooltip
-                        );
-
-                        const rect =
-                            this.getBoundingClientRect();
-
-                        let left =
-                            rect.left +
-                            rect.width / 2;
-
-                        let top =
-                            rect.top -
-                            tooltip.offsetHeight -
-                            10;
-
-                        tooltip.style.left =
-                            `${left}px`;
-
-                        tooltip.style.top =
-                            `${top}px`;
-
-                        tooltip.style.transform =
-                            "translateX(-50%)";
-
-                        const tooltipRect =
-                            tooltip.getBoundingClientRect();
-
-                        if (
-                            tooltipRect.left < 10
-                        ) {
-                            left =
-                                10 +
-                                tooltip.offsetWidth / 2;
-
-                            tooltip.style.left =
-                                `${left}px`;
-                        }
-
-                        if (
-                            tooltipRect.right >
-                            window.innerWidth - 10
-                        ) {
-                            left =
-                                window.innerWidth -
-                                10 -
-                                tooltip.offsetWidth / 2;
-
-                            tooltip.style.left =
-                                `${left}px`;
-                        }
-
-                        if (
-                            tooltipRect.top < 10
-                        ) {
-                            top =
-                                rect.bottom + 10;
-
-                            tooltip.style.top =
-                                `${top}px`;
-                        }
-
-                        tooltip.style.opacity = "1";
-
-                        this._tooltip =
-                            tooltip;
-                    }
-                );
-
-                item.addEventListener(
-                    "mouseleave",
-                    function () {
-
-                        if (this._tooltip) {
-                            this._tooltip.remove();
-                            this._tooltip = null;
-                        }
-
-                    }
-                );
+                this._tooltip = tooltip;
             });
-    })
-    .catch(error => {
 
-        console.error(
-            "Lỗi khi lấy dữ liệu món ăn:",
-            error
-        );
+            item.addEventListener("mouseleave", function () {
+                if (this._tooltip) {
+                    this._tooltip.remove();
+                    this._tooltip = null;
+                }
+            });
+        }
+    }
 
-        alert(
-            "Không thể tải dữ liệu món ăn"
-        );
+    const instructions = meal.strInstructions || "";
+
+    const steps = instructions
+        .split(/\r?\n/)
+        .map(step => step.trim())
+        .filter(step => step !== "");
+
+    instructionList.innerHTML = "";
+
+    steps.forEach((step, index) => {
+        const stepBox = document.createElement("div");
+        stepBox.className = "instruction-step";
+
+        const img = document.createElement("img");
+
+        img.src = meal.strMealThumb;
+        img.alt = `Step ${index + 1}`;
+
+        const content = document.createElement("div");
+        content.className = "instruction-content";
+
+        const number = document.createElement("div");
+        number.className = "instruction-number";
+        number.textContent = `Step ${index + 1}`;
+
+        const text = document.createElement("div");
+        text.className = "instruction-text";
+        text.textContent = step;
+
+        content.appendChild(number);
+        content.appendChild(text);
+
+        stepBox.appendChild(img);
+        stepBox.appendChild(content);
+
+        instructionList.appendChild(stepBox);
     });
+})
+.catch(error => {
+    console.error("Lỗi khi lấy dữ liệu món ăn:", error);
+    alert("Không thể tải dữ liệu món ăn");
+});
+
+const commentInput = document.getElementById("commentInput");
+const commentBtn = document.getElementById("commentBtn");
+const commentList = document.getElementById("commentList");
+const favoriteBtn = document.getElementById("favoriteBtn");
+
+const favoriteKey = `favorite_${mealId}`;
+const commentKey = `comments_${mealId}`;
+
+function loadFavorite() {
+    const isFavorite = localStorage.getItem(favoriteKey) === "true";
+
+    if (isFavorite) {
+        favoriteBtn.classList.add("active");
+        favoriteBtn.textContent = "♥ Đã yêu thích";
+    } else {
+        favoriteBtn.classList.remove("active");
+        favoriteBtn.textContent = "♡ Yêu thích";
+    }
+}
+
+favoriteBtn.addEventListener("click", () => {
+    const isFavorite = localStorage.getItem(favoriteKey) === "true";
+
+    localStorage.setItem(favoriteKey, !isFavorite);
+
+    loadFavorite();
+});
+
+function loadComments() {
+    const comments = JSON.parse(
+        localStorage.getItem(commentKey) || "[]"
+    );
+
+    commentList.innerHTML = "";
+
+    comments.forEach(comment => {
+        const commentItem = document.createElement("div");
+        commentItem.className = "comment-item";
+
+        const commentAvatar = document.createElement("img");
+        commentAvatar.className = "comment-avatar";
+        commentAvatar.src = comment.avatar || "Img/Avatar.png";
+        commentAvatar.alt = "Avatar";
+
+        const commentContent = document.createElement("div");
+        commentContent.className = "comment-content";
+
+        const commentUsername = document.createElement("div");
+        commentUsername.className = "comment-username";
+        commentUsername.textContent = comment.username || "User";
+
+        const commentText = document.createElement("div");
+        commentText.className = "comment-text";
+        commentText.textContent = comment.text;
+
+        commentContent.appendChild(commentUsername);
+        commentContent.appendChild(commentText);
+
+        commentItem.appendChild(commentAvatar);
+        commentItem.appendChild(commentContent);
+
+        commentList.appendChild(commentItem);
+    });
+}
+
+commentBtn.addEventListener("click", () => {
+    const text = commentInput.value.trim();
+
+    if (!text) {
+        alert("Vui lòng nhập bình luận");
+        return;
+    }
+
+    const currentUser = JSON.parse(
+        localStorage.getItem("currentUser")
+    );
+
+    const savedAvatar =
+        localStorage.getItem("avatar") || "Img/Avatar.png";
+
+    const comments = JSON.parse(
+        localStorage.getItem(commentKey) || "[]"
+    );
+
+    const newComment = {
+        username: currentUser ? currentUser.username : "User",
+        avatar: savedAvatar,
+        text: text
+    };
+
+    comments.unshift(newComment);
+
+    localStorage.setItem(
+        commentKey,
+        JSON.stringify(comments)
+    );
+
+    commentInput.value = "";
+
+    loadComments();
+
+    commentList.scrollTop = 0;
+});
+
+loadFavorite();
+loadComments();
