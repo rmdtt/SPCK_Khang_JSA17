@@ -1,18 +1,42 @@
 const searchResults = document.getElementById("searchResults");
 const searchTitle = document.getElementById("searchTitle");
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
 
 const params = new URLSearchParams(window.location.search);
 const searchName = params.get("search") || "";
 
 let allMeals = [];
 
-searchTitle.textContent = `Search results for "${searchName}"`;
+searchInput.value = searchName;
+
+searchTitle.textContent = searchName
+    ? `Search results for "${searchName}"`
+    : "Search results";
+
+function performSearch() {
+    const keyword = searchInput.value.trim();
+
+    if (!keyword) {
+        return;
+    }
+
+    window.location.href = `Search.html?search=${encodeURIComponent(keyword)}`;
+}
+
+searchBtn.addEventListener("click", performSearch);
+
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+});
 
 async function searchMeals() {
     if (!searchName) {
         searchResults.innerHTML = `
             <div class="no-results">
-                Không có từ khóa tìm kiếm
+                Nhập tên món ăn để tìm kiếm
             </div>
         `;
         return;
