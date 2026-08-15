@@ -558,3 +558,30 @@ commentBtn.addEventListener("click", () => {
 
 loadFavorite();
 loadComments();
+
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+
+if (searchBtn && searchInput) {
+
+    searchBtn.addEventListener("click", () => {
+
+        const keyword = searchInput.value.trim();
+
+        if (keyword === "") {
+            alert("Vui lòng nhập tên món ăn!");
+            return;
+        }
+
+        window.location.href =
+            `Search.html?search=${encodeURIComponent(keyword)}`;
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+
+        if (e.key === "Enter") {
+            searchBtn.click();
+        }
+
+    });
+}
