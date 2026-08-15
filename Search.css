@@ -12,6 +12,7 @@ body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    background: #222;
 }
 
 .Background {
@@ -71,8 +72,8 @@ body {
 
 .search-box input {
     width: 100%;
-    max-width: 400px;
-    padding: 8px 12px;
+    max-width: 410px;
+    padding: 9px 13px;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -80,7 +81,7 @@ body {
 }
 
 .search-box button {
-    padding: 8px 16px;
+    padding: 9px 17px;
     border: none;
     border-radius: 5px;
     background: rgb(255, 140, 0);
@@ -184,172 +185,118 @@ body {
     position: relative;
     z-index: 10;
     width: 100%;
-    padding-top: 70px;
+    padding: 45px 0 70px;
 }
 
-.welcome {
-    width: 100%;
-    text-align: center;
-    color: white;
-    padding: 30px 20px 45px;
-}
-
-.welcome h1 {
-    font-size: 48px;
-    margin-bottom: 15px;
-}
-
-.welcome h2 {
-    font-size: 24px;
-    font-weight: 400;
-}
-
-.container-random-meals {
-    position: relative;
-    width: calc(100% - 200px);
+.search-header {
+    width: 90%;
     max-width: 1400px;
-    min-height: 390px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.search-header h1 {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.search-results {
+    width: 90%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
-    border-radius: 16px;
-    background: rgba(100, 55, 30, 0.75);
-    backdrop-filter: blur(8px);
-}
-
-.container-random-meals h2 {
-    color: white;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.random-meals {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 280px;
     gap: 20px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 300px;
-    padding-bottom: 10px;
 }
 
-.random-meals::-webkit-scrollbar {
-    height: 8px;
-}
-
-.random-meals::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-}
-
-.random-meals::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.meal-card {
-    flex: 0 0 220px;
-    height: 285px;
+.search-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: rgba(100, 55, 30, 0.85);
     border-radius: 12px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.18);
-    transition: transform 0.3s ease;
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.meal-card img {
+.search-card:hover {
+    transform: scale(1.04);
+    background: rgba(120, 70, 40, 0.95);
+    z-index: 20;
+}
+
+.search-card img {
     width: 100%;
-    height: 165px;
+    height: 200px;
     object-fit: cover;
     display: block;
 }
 
-.meal-card h3 {
-    color: white;
+.search-card-content {
+    flex: 1;
+    padding: 12px;
     text-align: center;
-    padding: 12px 8px;
-    font-size: 19px;
-    line-height: 1.2;
 }
 
-.meal-card a {
+.search-card-content h2 {
     color: white;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 8px;
 }
 
-.meal-card:hover {
-    transform: scale(1.05);
+.search-card-content p {
+    color: white;
+    font-size: 15px;
 }
 
-.favorite-meals {
+.search-card.featured-card {
+    grid-column: span 2;
+    grid-row: span 2;
     position: relative;
-    width: calc(100% - 200px);
-    max-width: 1400px;
-    min-height: 390px;
-    margin: 40px auto 60px;
-    padding: 20px;
-    border-radius: 16px;
-    background: rgba(100, 55, 30, 0.75);
-    backdrop-filter: blur(8px);
-    z-index: 10;
 }
 
-.favorite-meals h2 {
-    color: white;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-#favoriteMeals {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 300px;
-    padding-bottom: 10px;
-}
-
-#favoriteMeals::-webkit-scrollbar {
-    height: 8px;
-}
-
-#favoriteMeals::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-}
-
-#favoriteMeals::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.favorite-card {
-    flex: 0 0 220px;
-    height: 285px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.18);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.favorite-card:hover {
-    transform: scale(1.05);
-}
-
-.favorite-card img {
+.search-card.featured-card img {
     width: 100%;
-    height: 165px;
+    height: 100%;
+    min-height: 0;
     object-fit: cover;
-    display: block;
 }
 
-.favorite-card h3 {
+.search-card.featured-card .search-card-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+
+.search-card.featured-card .search-card-content h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.search-card.featured-card .search-card-content p {
+    font-size: 17px;
+}
+
+.no-results {
+    width: 90%;
+    max-width: 1400px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 16px;
+    background: rgba(100, 55, 30, 0.8);
     color: white;
     text-align: center;
-    padding: 12px 8px;
-    font-size: 19px;
-    line-height: 1.2;
-    margin: 0;
-}
-
-.favorite-card h3::after {
-    content: " ♥";
-    color: white;
+    font-size: 22px;
 }
 
 .footer {
@@ -384,13 +331,15 @@ body {
         display: none;
     }
 
-    .container-random-meals,
-    .favorite-meals {
+    .search-results {
         width: calc(100% - 80px);
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 280px;
     }
 
-    #favoriteMeals {
-        grid-template-columns: repeat(2, 1fr);
+    .search-card.featured-card {
+        grid-column: span 2;
+        grid-row: span 2;
     }
 }
 
@@ -416,20 +365,38 @@ body {
         display: none;
     }
 
-    .welcome h1 {
-        font-size: 34px;
-    }
-
-    .welcome h2 {
-        font-size: 18px;
-    }
-
-    .container-random-meals,
-    .favorite-meals {
+    .search-header {
         width: calc(100% - 30px);
+        margin-bottom: 25px;
     }
 
-    #favoriteMeals {
+    .search-header h1 {
+        font-size: 30px;
+    }
+
+    .search-results {
+        width: calc(100% - 30px);
         grid-template-columns: 1fr;
+        grid-auto-rows: 280px;
+        gap: 15px;
+    }
+
+    .search-card.featured-card {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .search-card.featured-card img {
+        height: 200px;
+    }
+
+    .search-card.featured-card .search-card-content {
+        position: static;
+        background: none;
+        padding: 12px;
+    }
+
+    .search-card.featured-card .search-card-content h2 {
+        font-size: 20px;
     }
 }

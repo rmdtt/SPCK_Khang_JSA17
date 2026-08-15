@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Main.css">
-    <title>Main</title>
+    <title>Search Meals</title>
+    <link rel="stylesheet" href="Search.css">
 </head>
 
 <body>
-    <div class="Background">
 
+    <div class="Background">
         <img src="Img/Main_bg.png" alt="Background">
 
         <nav class="navbar">
@@ -21,15 +21,12 @@
 
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Tìm món ăn...">
-
-                <button id="searchBtn">
-                    Search
-                </button>
+                <button id="searchBtn">Search</button>
             </div>
 
             <ul class="nav-links">
                 <li>
-                    <a href="Main.html">Main</a>
+                    <a href="Main.html">Home</a>
                 </li>
 
                 <li>
@@ -63,45 +60,15 @@
 
         </nav>
 
+        <main class="main-content">
 
-        <div class="main-content">
-
-            <div class="welcome">
-
-                <h1>
-                    Welcome to CookBook!
-                </h1>
-
-                <h2>
-                    We have a lot of recipes of meals around the world there
-                </h2>
-
+            <div class="search-header">
+                <h1 id="searchTitle"></h1>
             </div>
 
+            <div id="searchResults" class="search-results"></div>
 
-            <div class="container-random-meals">
-
-                <h2>
-                    Random meals
-                </h2>
-
-                <div id="randomMeals" class="random-meals">
-                </div>
-
-            </div>
-
-
-            <div class="favorite-meals">
-
-                <h2 id="favoriteTitle">
-                    ♥ Favorated meals
-                </h2>
-
-                <div id="favoriteMeals"></div>
-
-            </div>
-
-        </div>
+        </main>
 
     </div>
 
@@ -111,9 +78,8 @@
         <p>© 2026 CookBook. All rights reserved.</p>
     </footer>
 
-    
-    <script src="config.js"></script>
-    <script src="Main.js"></script>
+    <script src="Search.js"></script>
+
 </body>
 
 </html>

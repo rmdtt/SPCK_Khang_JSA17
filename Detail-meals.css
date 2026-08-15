@@ -668,3 +668,22 @@ body {
         padding: 30px 20px;
     }
 }
+.favorite-heart {
+    color: #fff;
+    font-size: 30px;
+    margin-left: 8px;
+    display: inline-block;
+    animation: heartPop .25s ease;
+}
+
+@keyframes heartPop {
+    0% {
+        transform: scale(.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
