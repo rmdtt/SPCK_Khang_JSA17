@@ -1,5 +1,8 @@
 const API_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
+const KITCHEN_API_URL =
+  "https://dummyjson.com/products/category/kitchen-accessories";
+
 const navbar = document.querySelector(".navbar");
 
 if (navbar) {
