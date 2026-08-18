@@ -12,66 +12,94 @@ if (!localStorage.getItem("currentUser")) {
     location.href = "Login.html";
 }
 
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const currentUser = JSON.parse(
+    localStorage.getItem("currentUser")
+);
 
-if (currentUser) {
+if (currentUser && username) {
     username.textContent = currentUser.username;
 }
 
 const savedAvatar = localStorage.getItem("avatar");
 
-if (savedAvatar) {
+if (savedAvatar && avatar) {
     avatar.src = savedAvatar;
 }
 
-container.addEventListener("click", e => {
-    if (!e.target.closest("#dropdown")) {
-        dropdown.style.display =
-            dropdown.style.display === "block"
-                ? "none"
-                : "block";
-    }
-});
+if (container && dropdown) {
+    container.addEventListener("click", e => {
+        if (!e.target.closest("#dropdown")) {
+            dropdown.style.display =
+                dropdown.style.display === "block"
+                    ? "none"
+                    : "block";
+        }
+    });
+}
 
 document.addEventListener("click", e => {
-    if (!e.target.closest(".container")) {
+    if (
+        container &&
+        dropdown &&
+        !e.target.closest(".container")
+    ) {
         dropdown.style.display = "none";
     }
 });
 
-avatarInput.addEventListener("change", function () {
-    const file = this.files[0];
+if (avatarInput && avatar) {
+    avatarInput.addEventListener("change", function () {
+        const file = this.files[0];
 
-    if (!file) return;
+        if (!file) {
+            return;
+        }
 
-    const reader = new FileReader();
+        const reader = new FileReader();
 
-    reader.onload = e => {
-        avatar.src = e.target.result;
-        localStorage.setItem("avatar", e.target.result);
-    };
+        reader.onload = e => {
+            avatar.src = e.target.result;
 
-    reader.readAsDataURL(file);
-});
+            localStorage.setItem(
+                "avatar",
+                e.target.result
+            );
+        };
 
-logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    sessionStorage.clear();
-    location.href = "Login.html";
-});
+        reader.readAsDataURL(file);
+    });
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("currentUser");
+        sessionStorage.clear();
+        location.href = "Login.html";
+    });
+}
 
 if (!mealId) {
     alert("Không có ID món ăn");
     location.href = "Main.html";
 }
 
-const commentInput = document.getElementById("commentInput");
-const commentBtn = document.getElementById("commentBtn");
-const commentList = document.getElementById("commentList");
-const favoriteBtn = document.getElementById("favoriteBtn");
+const commentInput =
+    document.getElementById("commentInput");
 
-const favoriteKey = `favorite_${mealId}`;
-const commentKey = `comments_${mealId}`;
+const commentBtn =
+    document.getElementById("commentBtn");
+
+const commentList =
+    document.getElementById("commentList");
+
+const favoriteBtn =
+    document.getElementById("favoriteBtn");
+
+const favoriteKey =
+    `favorite_${mealId}`;
+
+const commentKey =
+    `comments_${mealId}`;
 
 function getFavoriteMeals() {
     return JSON.parse(
@@ -87,15 +115,21 @@ function saveFavoriteMeals(meals) {
 }
 
 function addFavoriteHeart() {
-    const mealName = document.getElementById("mealName");
+    const mealName =
+        document.getElementById("mealName");
 
-    if (!mealName) return;
+    if (!mealName) {
+        return;
+    }
 
     if (!mealName.querySelector(".favorite-heart")) {
-        const heart = document.createElement("span");
+        const heart =
+            document.createElement("span");
 
-        heart.className = "favorite-heart";
-        heart.textContent = " ♥";
+        heart.className =
+            "favorite-heart";
+
+        heart.textContent = " ✨";
 
         mealName.appendChild(heart);
     }
@@ -111,65 +145,180 @@ function removeFavoriteHeart() {
 }
 
 function loadFavorite() {
+    if (!favoriteBtn) {
+        return;
+    }
+
     const isFavorite =
         localStorage.getItem(favoriteKey) === "true";
 
     if (isFavorite) {
         favoriteBtn.classList.add("active");
-        favoriteBtn.textContent = "♥ Favorated";
-
+        favoriteBtn.textContent = "🎆 Favorated";
         addFavoriteHeart();
     } else {
         favoriteBtn.classList.remove("active");
-        favoriteBtn.textContent = "♡ Favorate";
-
+        favoriteBtn.textContent = "🎆 Favorate";
         removeFavoriteHeart();
     }
 }
 
-favoriteBtn.addEventListener("click", () => {
-    const isFavorite =
-        localStorage.getItem(favoriteKey) === "true";
+function createFireworks() {
+    let fireworks =
+        document.getElementById("fireworks");
 
-    if (!isFavorite) {
-        localStorage.setItem(favoriteKey, "true");
+    if (!fireworks) {
+        fireworks =
+            document.createElement("div");
 
-        const mealName =
-            document.getElementById("mealName");
+        fireworks.id = "fireworks";
 
-        const mealImage =
-            document.getElementById("mealImage");
-
-        const meal = {
-            id: mealId,
-            name: mealName.textContent,
-            image: mealImage.src
-        };
-
-        let favoriteMeals = getFavoriteMeals();
-
-        const existed = favoriteMeals.some(
-            item => item.id === meal.id
-        );
-
-        if (!existed) {
-            favoriteMeals.push(meal);
-            saveFavoriteMeals(favoriteMeals);
-        }
-    } else {
-        localStorage.setItem(favoriteKey, "false");
-
-        let favoriteMeals = getFavoriteMeals();
-
-        favoriteMeals = favoriteMeals.filter(
-            item => item.id !== mealId
-        );
-
-        saveFavoriteMeals(favoriteMeals);
+        document.body.appendChild(fireworks);
     }
 
-    loadFavorite();
-});
+    for (let explosion = 0; explosion < 5; explosion++) {
+        setTimeout(() => {
+            createFireworkExplosion(fireworks);
+        }, explosion * 180);
+    }
+}
+
+function createFireworkExplosion(container) {
+    const centerX =
+        Math.random() * window.innerWidth;
+
+    const centerY =
+        100 +
+        Math.random() *
+        (window.innerHeight * 0.65);
+
+    const particleCount = 55;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle =
+            document.createElement("span");
+
+        particle.className = "firework";
+
+        const angle =
+            (Math.PI * 2 * i) /
+            particleCount;
+
+        const distance =
+            70 +
+            Math.random() * 180;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+        particle.style.left =
+            `${centerX}px`;
+
+        particle.style.top =
+            `${centerY}px`;
+
+        particle.style.setProperty(
+            "--x",
+            `${x}px`
+        );
+
+        particle.style.setProperty(
+            "--y",
+            `${y}px`
+        );
+
+        const size =
+            3 + Math.random() * 5;
+
+        particle.style.width =
+            `${size}px`;
+
+        particle.style.height =
+            `${size}px`;
+
+        container.appendChild(particle);
+
+        setTimeout(() => {
+            particle.remove();
+        }, 1100);
+    }
+}
+
+if (favoriteBtn) {
+    favoriteBtn.addEventListener("click", () => {
+        const isFavorite =
+            localStorage.getItem(favoriteKey) === "true";
+
+        if (!isFavorite) {
+            localStorage.setItem(
+                favoriteKey,
+                "true"
+            );
+
+            const mealName =
+                document.getElementById("mealName");
+
+            const mealImage =
+                document.getElementById("mealImage");
+
+            const meal = {
+                id: mealId,
+                name: mealName
+                    ? mealName.textContent
+                    : "Meal",
+                image: mealImage
+                    ? mealImage.src
+                    : ""
+            };
+
+            let favoriteMeals =
+                getFavoriteMeals();
+
+            const existed =
+                favoriteMeals.some(
+                    item => item.id === meal.id
+                );
+
+            if (!existed) {
+                favoriteMeals.push(meal);
+                saveFavoriteMeals(favoriteMeals);
+            }
+
+            createFireworks();
+
+            favoriteBtn.classList.add(
+                "favorite-celebrate"
+            );
+
+            setTimeout(() => {
+                favoriteBtn.classList.remove(
+                    "favorite-celebrate"
+                );
+            }, 700);
+
+        } else {
+            localStorage.setItem(
+                favoriteKey,
+                "false"
+            );
+
+            let favoriteMeals =
+                getFavoriteMeals();
+
+            favoriteMeals =
+                favoriteMeals.filter(
+                    item => item.id !== mealId
+                );
+
+            saveFavoriteMeals(favoriteMeals);
+        }
+
+        loadFavorite();
+    });
+}
 
 fetch(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
@@ -198,225 +347,229 @@ fetch(
         const instructionList =
             document.getElementById("instructionList");
 
-        mealImage.src = meal.strMealThumb;
-        mealImage.alt = meal.strMeal;
+        if (mealImage) {
+            mealImage.src = meal.strMealThumb;
+            mealImage.alt = meal.strMeal;
+        }
 
-        mealName.textContent = meal.strMeal;
+        if (mealName) {
+            mealName.textContent = meal.strMeal;
+        }
 
-        backgroundImage.src = meal.strMealThumb;
+        if (backgroundImage) {
+            backgroundImage.src = meal.strMealThumb;
+        }
 
         loadFavorite();
 
-        ingredientList.innerHTML = "";
+        if (ingredientList) {
+            ingredientList.innerHTML = "";
 
-        for (let i = 1; i <= 20; i++) {
-            const ingredient =
-                meal[`strIngredient${i}`];
+            for (let i = 1; i <= 20; i++) {
+                const ingredient =
+                    meal[`strIngredient${i}`];
 
-            const measure =
-                meal[`strMeasure${i}`];
+                const measure =
+                    meal[`strMeasure${i}`];
 
-            if (
-                ingredient &&
-                ingredient.trim() !== ""
-            ) {
-                const item =
+                if (
+                    ingredient &&
+                    ingredient.trim() !== ""
+                ) {
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "ingredient-item";
+
+                    item.dataset.name =
+                        ingredient.trim();
+
+                    item.dataset.measure =
+                        measure
+                            ? measure.trim()
+                            : "";
+
+                    const img =
+                        document.createElement("img");
+
+                    img.src =
+                        `https://www.themealdb.com/images/ingredients/${encodeURIComponent(
+                            ingredient.trim()
+                        )}.png`;
+
+                    img.alt =
+                        ingredient.trim();
+
+                    item.appendChild(img);
+
+                    ingredientList.appendChild(item);
+
+                    item.addEventListener(
+                        "mouseenter",
+                        function () {
+                            const tooltip =
+                                document.createElement("div");
+
+                            tooltip.className =
+                                "ingredient-tooltip";
+
+                            tooltip.textContent =
+                                this.dataset.measure
+                                    ? `${this.dataset.name} - ${this.dataset.measure}`
+                                    : this.dataset.name;
+
+                            document.body.appendChild(
+                                tooltip
+                            );
+
+                            const rect =
+                                this.getBoundingClientRect();
+
+                            let left =
+                                rect.left +
+                                rect.width / 2;
+
+                            let top =
+                                rect.bottom + 10;
+
+                            tooltip.style.left =
+                                `${left}px`;
+
+                            tooltip.style.top =
+                                `${top}px`;
+
+                            tooltip.style.transform =
+                                "translateX(-50%)";
+
+                            const tooltipRect =
+                                tooltip.getBoundingClientRect();
+
+                            if (
+                                tooltipRect.left < 10
+                            ) {
+                                left =
+                                    10 +
+                                    tooltipRect.width / 2;
+                            }
+
+                            if (
+                                tooltipRect.right >
+                                window.innerWidth - 10
+                            ) {
+                                left =
+                                    window.innerWidth -
+                                    10 -
+                                    tooltipRect.width / 2;
+                            }
+
+                            if (
+                                tooltipRect.bottom >
+                                window.innerHeight - 10
+                            ) {
+                                top =
+                                    rect.top -
+                                    tooltipRect.height -
+                                    10;
+                            }
+
+                            tooltip.style.left =
+                                `${left}px`;
+
+                            tooltip.style.top =
+                                `${top}px`;
+
+                            this._tooltip =
+                                tooltip;
+                        }
+                    );
+
+                    item.addEventListener(
+                        "mouseleave",
+                        function () {
+                            if (this._tooltip) {
+                                this._tooltip.remove();
+                                this._tooltip = null;
+                            }
+                        }
+                    );
+                }
+            }
+        }
+
+        if (instructionList) {
+            const instructions =
+                meal.strInstructions || "";
+
+            const cleanedInstructions =
+                instructions
+                    .replace(
+                        /\b(?:step|steps)\s*\d+\s*[:.)-]?\s*/gi,
+                        ""
+                    )
+                    .replace(
+                        /^\s*\d+\s*[:.)-]\s*/gm,
+                        ""
+                    )
+                    .trim();
+
+            const steps =
+                cleanedInstructions
+                    .split(/\r?\n/)
+                    .map(step => step.trim())
+                    .filter(step => step !== "");
+
+            instructionList.innerHTML = "";
+
+            steps.forEach((step, index) => {
+                const stepBox =
                     document.createElement("div");
 
-                item.className = "ingredient-item";
-
-                item.dataset.name =
-                    ingredient.trim();
-
-                item.dataset.measure =
-                    measure
-                        ? measure.trim()
-                        : "";
+                stepBox.className =
+                    "instruction-step";
 
                 const img =
                     document.createElement("img");
 
                 img.src =
-                    `https://www.themealdb.com/images/ingredients/${encodeURIComponent(
-                        ingredient.trim()
-                    )}.png`;
+                    meal.strMealThumb;
 
-                img.alt = ingredient.trim();
+                img.alt =
+                    `Step ${index + 1}`;
 
-                item.appendChild(img);
+                const content =
+                    document.createElement("div");
 
-                ingredientList.appendChild(item);
+                content.className =
+                    "instruction-content";
 
-                item.addEventListener(
-                    "mouseenter",
-                    function () {
-                        const tooltip =
-                            document.createElement("div");
+                const number =
+                    document.createElement("div");
 
-                        tooltip.className =
-                            "ingredient-tooltip";
+                number.className =
+                    "instruction-number";
 
-                        tooltip.textContent =
-                            this.dataset.measure
-                                ? `${this.dataset.name} - ${this.dataset.measure}`
-                                : this.dataset.name;
+                number.textContent =
+                    `Step ${index + 1}`;
 
-                        document.body.appendChild(
-                            tooltip
-                        );
+                const text =
+                    document.createElement("div");
 
-                        const rect =
-                            this.getBoundingClientRect();
+                text.className =
+                    "instruction-text";
 
-                        let left =
-                            rect.left +
-                            rect.width / 2;
+                text.textContent =
+                    step;
 
-                        let top =
-                            rect.bottom + 10;
+                content.appendChild(number);
+                content.appendChild(text);
 
-                        tooltip.style.left =
-                            `${left}px`;
+                stepBox.appendChild(img);
+                stepBox.appendChild(content);
 
-                        tooltip.style.top =
-                            `${top}px`;
-
-                        tooltip.style.transform =
-                            "translateX(-50%)";
-
-                        const tooltipRect =
-                            tooltip.getBoundingClientRect();
-
-                        if (
-                            tooltipRect.left < 10
-                        ) {
-                            left =
-                                10 +
-                                tooltipRect.width /
-                                    2;
-                        }
-
-                        if (
-                            tooltipRect.right >
-                            window.innerWidth - 10
-                        ) {
-                            left =
-                                window.innerWidth -
-                                10 -
-                                tooltipRect.width /
-                                    2;
-                        }
-
-                        if (
-                            tooltipRect.bottom >
-                            window.innerHeight - 10
-                        ) {
-                            top =
-                                rect.top -
-                                tooltipRect.height -
-                                10;
-                        }
-
-                        tooltip.style.left =
-                            `${left}px`;
-
-                        tooltip.style.top =
-                            `${top}px`;
-
-                        this._tooltip =
-                            tooltip;
-                    }
-                );
-
-                item.addEventListener(
-                    "mouseleave",
-                    function () {
-                        if (this._tooltip) {
-                            this._tooltip.remove();
-
-                            this._tooltip =
-                                null;
-                        }
-                    }
-                );
-            }
+                instructionList.appendChild(stepBox);
+            });
         }
-
-        const instructions =
-            meal.strInstructions || "";
-
-        const cleanedInstructions =
-            instructions
-                .replace(
-                    /\b(?:step|steps)\s*\d+\s*[:.)-]?\s*/gi,
-                    ""
-                )
-                .replace(
-                    /^\s*\d+\s*[:.)-]\s*/gm,
-                    ""
-                )
-                .trim();
-
-        const steps =
-            cleanedInstructions
-                .split(/\r?\n/)
-                .map(step => step.trim())
-                .filter(
-                    step => step !== ""
-                );
-
-        instructionList.innerHTML = "";
-
-        steps.forEach((step, index) => {
-            const stepBox =
-                document.createElement("div");
-
-            stepBox.className =
-                "instruction-step";
-
-            const img =
-                document.createElement("img");
-
-            img.src =
-                meal.strMealThumb;
-
-            img.alt =
-                `Step ${index + 1}`;
-
-            const content =
-                document.createElement("div");
-
-            content.className =
-                "instruction-content";
-
-            const number =
-                document.createElement("div");
-
-            number.className =
-                "instruction-number";
-
-            number.textContent =
-                `Step ${index + 1}`;
-
-            const text =
-                document.createElement("div");
-
-            text.className =
-                "instruction-text";
-
-            text.textContent =
-                step;
-
-            content.appendChild(number);
-            content.appendChild(text);
-
-            stepBox.appendChild(img);
-            stepBox.appendChild(content);
-
-            instructionList.appendChild(
-                stepBox
-            );
-        });
     })
     .catch(error => {
         console.error(
@@ -430,10 +583,13 @@ fetch(
     });
 
 function loadComments() {
+    if (!commentList) {
+        return;
+    }
+
     const comments =
         JSON.parse(
-            localStorage.getItem(commentKey) ||
-                "[]"
+            localStorage.getItem(commentKey) || "[]"
         );
 
     commentList.innerHTML = "";
@@ -452,11 +608,9 @@ function loadComments() {
             "comment-avatar";
 
         commentAvatar.src =
-            comment.avatar ||
-            "Img/Avatar.png";
+            comment.avatar || "Img/Avatar.png";
 
-        commentAvatar.alt =
-            "Avatar";
+        commentAvatar.alt = "Avatar";
 
         const commentContent =
             document.createElement("div");
@@ -471,8 +625,7 @@ function loadComments() {
             "comment-username";
 
         commentUsername.textContent =
-            comment.username ||
-            "User";
+            comment.username || "User";
 
         const commentText =
             document.createElement("div");
@@ -505,68 +658,64 @@ function loadComments() {
     });
 }
 
-commentBtn.addEventListener("click", () => {
-    const text =
-        commentInput.value.trim();
+if (commentBtn) {
+    commentBtn.addEventListener("click", () => {
+        const text =
+            commentInput.value.trim();
 
-    if (!text) {
-        alert("Vui lòng nhập bình luận");
-        return;
-    }
+        if (!text) {
+            alert("Vui lòng nhập bình luận");
+            return;
+        }
 
-    const currentUser =
-        JSON.parse(
-            localStorage.getItem(
-                "currentUser"
-            )
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem("currentUser")
+            );
+
+        const savedAvatar =
+            localStorage.getItem("avatar") ||
+            "Img/Avatar.png";
+
+        const comments =
+            JSON.parse(
+                localStorage.getItem(commentKey) || "[]"
+            );
+
+        const newComment = {
+            username:
+                currentUser
+                    ? currentUser.username
+                    : "User",
+            avatar: savedAvatar,
+            text: text
+        };
+
+        comments.unshift(newComment);
+
+        localStorage.setItem(
+            commentKey,
+            JSON.stringify(comments)
         );
 
-    const savedAvatar =
-        localStorage.getItem("avatar") ||
-        "Img/Avatar.png";
+        commentInput.value = "";
 
-    const comments =
-        JSON.parse(
-            localStorage.getItem(commentKey) ||
-                "[]"
-        );
+        loadComments();
 
-    const newComment = {
-        username:
-            currentUser
-                ? currentUser.username
-                : "User",
+        commentList.scrollTop = 0;
+    });
+}
 
-        avatar: savedAvatar,
+const searchInput =
+    document.getElementById("searchInput");
 
-        text: text
-    };
-
-    comments.unshift(newComment);
-
-    localStorage.setItem(
-        commentKey,
-        JSON.stringify(comments)
-    );
-
-    commentInput.value = "";
-
-    loadComments();
-
-    commentList.scrollTop = 0;
-});
-
-loadFavorite();
-loadComments();
-
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
+const searchBtn =
+    document.getElementById("searchBtn");
 
 if (searchBtn && searchInput) {
-
     searchBtn.addEventListener("click", () => {
-
-        const keyword = searchInput.value.trim();
+        const keyword =
+            searchInput.value.trim();
 
         if (keyword === "") {
             alert("Vui lòng nhập tên món ăn!");
@@ -574,14 +723,17 @@ if (searchBtn && searchInput) {
         }
 
         window.location.href =
-            `Search.html?search=${encodeURIComponent(keyword)}`;
+            `Search.html?search=${encodeURIComponent(
+                keyword
+            )}`;
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-
+    searchInput.addEventListener("keydown", e => {
         if (e.key === "Enter") {
             searchBtn.click();
         }
-
     });
 }
+
+loadFavorite();
+loadComments();

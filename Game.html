@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Game.css">
+
+    <title>Food Memory Gacha</title>
+</head>
+
+<body>
+
+    <div class="Background">
+
+        <img src="Img/Main_bg.png" alt="Background">
+
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <a href="Main.html">
+                    CookBook
+                </a>
+            </div>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="Main.html">
+                        Main
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Game.html">
+                        Game
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Shop.html">
+                        Shop
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="container">
+
+                <div class="account">
+
+                    <span id="username"></span>
+
+                    <img id="avatar" src="Img/Avatar.png" alt="Avatar">
+
+                </div>
+
+
+                <div id="dropdown" class="dropdown">
+
+                    <label for="avatarInput">
+                        Change Avatar
+                    </label>
+
+                    <input type="file" id="avatarInput" accept="image/*" hidden>
+
+                    <button id="logoutBtn">
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+        <a href="Shop.html" class="game-shop-button">
+            🛒 SHOP
+        </a>
+
+        <main class="game-wrapper">
+
+
+            <section id="startScreen" class="game-screen active">
+
+                <div class="start-card">
+
+                    <div class="game-icon">
+                        🍳
+                    </div>
+
+
+                    <h1>
+                        Food Memory Gacha
+                    </h1>
+
+
+                    <p>
+                        Gacha một món ăn và ghi nhớ
+                        cách làm trong 60 giây.
+                    </p>
+
+
+                    <p>
+                        Sau đó kéo các bước vào đúng
+                        thứ tự.
+                    </p>
+
+
+
+                    <div class="game-stats">
+
+                        <div class="game-stat">
+
+                            <span>
+                                💰 Money
+                            </span>
+
+                            <strong id="money">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="game-stat">
+
+                            <span>
+                                🎮 Plays Today
+                            </span>
+
+                            <strong id="playsToday">
+                                0/3
+                            </strong>
+
+                        </div>
+
+
+                        <div class="game-stat">
+
+                            <span>
+                                🏆 Best Score
+                            </span>
+
+                            <strong id="bestScoreDisplay">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <button id="gachaBtn" class="game-button">
+                        🎲 GACHA FOOD
+                    </button>
+
+
+
+                    <div class="game-info">
+
+                        <span>
+                            🧠 Memory
+                        </span>
+
+                        <span>
+                            ⏱ 60 Seconds
+                        </span>
+
+                        <span>
+                            🎯 Drag & Drop
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <section id="memorizeScreen" class="game-screen">
+
+                <div class="memorize-header">
+
+                    <div>
+
+                        <p>
+                            MEMORIZE THE RECIPE
+                        </p>
+
+                        <span>
+                            Remember all steps
+                            before the timer ends.
+                        </span>
+
+                    </div>
+
+
+                    <div id="timer" class="timer">
+                        60
+                    </div>
+
+                </div>
+
+
+
+                <div class="recipe-card">
+
+                    <img id="mealImage" src="" alt="Meal">
+
+
+                    <div class="recipe-content">
+
+                        <span id="mealCategory" class="meal-category">
+                            Food
+                        </span>
+
+
+                        <h1 id="mealName">
+                            Meal
+                        </h1>
+
+
+                        <div class="recipe-box">
+
+                            <h2>
+                                How to make it
+                            </h2>
+
+
+                            <div id="recipeSteps"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="memorize-actions">
+
+                    <button id="skipBtn" class="skip-button">
+                        SKIP →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+
+            <section id="gameScreen" class="game-screen">
+
+                <div class="game-title-row">
+
+                    <div>
+
+                        <button id="backGameBtn" class="back-game-button" type="button">
+                            ← BACK TO GAME
+                        </button>
+
+
+                        <span class="game-label">
+                            MEMORY CHALLENGE
+                        </span>
+
+
+                        <h1 id="gameMealName">
+                            Meal
+                        </h1>
+
+                    </div>
+
+
+
+                    <div class="answer-time">
+
+                        <span>
+                            TIME
+                        </span>
+
+
+                        <strong id="answerTimer">
+                            60
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="challenge-info">
+
+                    <div>
+
+                        <span>
+                            💰 Money
+                        </span>
+
+                        <strong id="gameMoney">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            🎮 Plays
+                        </span>
+
+                        <strong id="gamePlays">
+                            0/3
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <p class="game-description">
+                    Kéo từng bước vào ô theo đúng
+                    thứ tự của công thức.
+                </p>
+
+
+
+                <div id="answerSlots" class="answer-slots"></div>
+
+
+
+                <h2 class="section-title">
+                    Available Steps
+                </h2>
+
+
+
+                <div id="stepPool" class="step-pool"></div>
+
+
+
+                <button id="checkBtn" class="game-button check-button" type="button">
+                    CHECK ANSWER
+                </button>
+
+            </section>
+
+
+
+
+            <section id="resultScreen" class="game-screen">
+
+                <div class="result-card">
+
+
+                    <div id="resultIcon" class="result-icon">
+                        🎉
+                    </div>
+
+
+
+                    <h1 id="resultTitle">
+                        PERFECT!
+                    </h1>
+
+
+
+                    <p id="resultMessage">
+                        Great memory!
+                    </p>
+
+
+
+                    <div class="final-score">
+
+                        <span>
+                            YOUR SCORE
+                        </span>
+
+
+                        <strong id="finalScore">
+                            0
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="money-earned">
+
+                        <span>
+                            💰 Money Earned
+                        </span>
+
+
+                        <strong id="moneyEarned">
+                            +0
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="result-info">
+
+
+                        <div>
+
+                            <span>
+                                Correct
+                            </span>
+
+                            <strong id="correctCount">
+                                0/0
+                            </strong>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <span>
+                                Time
+                            </span>
+
+                            <strong id="usedTime">
+                                0s
+                            </strong>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <span>
+                                Best
+                            </span>
+
+                            <strong id="resultBest">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="result-buttons">
+
+
+                        <button id="nextBtn" class="game-button" type="button">
+                            BACK TO GAME
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+
+    <footer class="footer">
+
+        <h2>
+            CookBook
+        </h2>
+
+
+        <p>
+            Chia sẻ công thức, khám phá món ăn.
+        </p>
+
+
+        <p>
+            © 2026 CookBook. All rights reserved.
+        </p>
+
+
+        <p>
+            If you need help or need more information
+            phone number *********** or send emails to
+            email **********@gmail.com
+        </p>
+
+    </footer>
+
+
+
+
+    <div id="loading" class="loading hidden">
+
+        <div class="spinner"></div>
+
+
+        <p>
+            Finding a delicious food...
+        </p>
+
+    </div>
+
+
+
+
+    <script src="config.js"></script>
+
+    <script src="Game.js"></script>
+
+</body>
+
+</html>

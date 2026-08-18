@@ -530,6 +530,90 @@ body {
     color: #ccc;
 }
 
+#fireworks {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.firework {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+        0 0 6px #fff,
+        0 0 12px #ffd700;
+    animation: firework-explode 1.1s ease-out forwards;
+}
+
+@keyframes firework-explode {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(var(--x), var(--y))
+            scale(0.2);
+    }
+}
+
+.favorite-celebrate {
+    animation: favorite-pop 0.7s ease;
+}
+
+@keyframes favorite-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.35);
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.favorite-heart {
+    display: inline-block;
+    animation: heart-pop 0.5s ease;
+}
+
+@keyframes heart-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    60% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 @media (max-width: 1200px) {
     .container-details {
         grid-template-columns: 450px 1fr;
