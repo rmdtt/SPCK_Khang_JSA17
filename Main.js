@@ -260,7 +260,7 @@ async function loadFavoriteMeals() {
         if (favoriteTitle) {
 
             favoriteTitle.textContent =
-                "🎆 Favorated meals (Empty)";
+                "💖 Favorated meals (Empty)";
         }
 
         return;
@@ -271,7 +271,7 @@ async function loadFavoriteMeals() {
     if (favoriteTitle) {
 
         favoriteTitle.textContent =
-            "🎆 Favorated meals";
+            "💖 Favorated meals";
     }
 
 
@@ -366,7 +366,7 @@ async function loadFavoriteMeals() {
         if (favoriteTitle) {
 
             favoriteTitle.textContent =
-                "🎆 Favorated meals (Empty)";
+                "💖 Favorated meals (Empty)";
         }
     }
 }

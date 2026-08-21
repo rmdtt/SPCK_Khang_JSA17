@@ -95,6 +95,9 @@ const commentList =
 const favoriteBtn =
     document.getElementById("favoriteBtn");
 
+const videoBtn =
+    document.getElementById("videoBtn");
+
 const favoriteKey =
     `favorite_${mealId}`;
 
@@ -129,7 +132,8 @@ function addFavoriteHeart() {
         heart.className =
             "favorite-heart";
 
-        heart.textContent = " ✨";
+        heart.textContent =
+            " 💖";
 
         mealName.appendChild(heart);
     }
@@ -154,11 +158,11 @@ function loadFavorite() {
 
     if (isFavorite) {
         favoriteBtn.classList.add("active");
-        favoriteBtn.textContent = "🎆 Favorated";
+        favoriteBtn.textContent = "💖 Favorated";
         addFavoriteHeart();
     } else {
         favoriteBtn.classList.remove("active");
-        favoriteBtn.textContent = "🎆 Favorate";
+        favoriteBtn.textContent = "💖 Favorate";
         removeFavoriteHeart();
     }
 }
@@ -320,6 +324,38 @@ if (favoriteBtn) {
     });
 }
 
+function openCookingVideo(mealName) {
+    if (!mealName) {
+        return;
+    }
+
+    const query =
+        `How to make ${mealName}`;
+
+    const youtubeUrl =
+        `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+
+    window.open(
+        youtubeUrl,
+        "_blank"
+    );
+}
+
+if (videoBtn) {
+    videoBtn.addEventListener("click", () => {
+        const mealName =
+            document.getElementById("mealName");
+
+        if (!mealName) {
+            return;
+        }
+
+        openCookingVideo(
+            mealName.textContent.trim()
+        );
+    });
+}
+
 fetch(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
 )
@@ -348,16 +384,21 @@ fetch(
             document.getElementById("instructionList");
 
         if (mealImage) {
-            mealImage.src = meal.strMealThumb;
-            mealImage.alt = meal.strMeal;
+            mealImage.src =
+                meal.strMealThumb;
+
+            mealImage.alt =
+                meal.strMeal;
         }
 
         if (mealName) {
-            mealName.textContent = meal.strMeal;
+            mealName.textContent =
+                meal.strMeal;
         }
 
         if (backgroundImage) {
-            backgroundImage.src = meal.strMealThumb;
+            backgroundImage.src =
+                meal.strMealThumb;
         }
 
         loadFavorite();

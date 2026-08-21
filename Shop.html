@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="Shop.css">
-    <title>Shop</title>
+
+    <title>CookBook - Kitchen Shop</title>
 </head>
 
 <body>
+
     <div class="Background">
 
-        <img src="Img/Main_bg.png" alt="Background">
+        <img src="Img/Main_bg.png" alt="Background" class="background-image">
 
         <nav class="navbar">
 
@@ -20,27 +23,39 @@
             </div>
 
             <div class="search-box">
+
                 <input type="text" id="searchInput" placeholder="Tìm món ăn...">
 
                 <button id="searchBtn">
                     Search
                 </button>
+
             </div>
 
             <ul class="nav-links">
+
                 <li>
                     <a href="Main.html">Main</a>
                 </li>
-                <li><a href="Game.html">Game</a></li>
-                <li><a href="Shop.html">Shop</a></li>
+
+                <li>
+                    <a href="Game.html">Game</a>
+                </li>
+
+                <li>
+                    <a href="Shop.html">Shop</a>
+                </li>
+
             </ul>
 
             <div class="container">
 
                 <div class="account">
+
                     <span id="username"></span>
 
                     <img id="avatar" src="Img/Avatar.png" alt="Avatar">
+
                 </div>
 
                 <div id="dropdown" class="dropdown">
@@ -61,19 +76,198 @@
 
         </nav>
 
+        <main class="shop-wrapper">
+
+            <section class="shop-header">
+
+                <div>
+
+                    <span class="shop-label">
+                        COOKBOOK STORE
+                    </span>
+
+                    <h1>
+                        Kitchen Shop 🍳
+                    </h1>
+
+                    <p>
+                        Khám phá các dụng cụ nhà bếp
+                        và mua trực tiếp.
+                    </p>
+
+                </div>
+
+
+                <div class="money-box">
+
+                    <span>
+                        🪙 Coins
+                    </span>
+
+                    <strong id="shopMoney">
+                        0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <section class="shop-controls">
+
+                <button class="category-btn active" data-category="kitchen-accessories">
+                    🍳 Kitchen Tools
+                </button>
+
+                <button class="category-btn" data-category="all">
+                    🛍 All
+                </button>
+
+            </section>
+
+
+            <section>
+
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+
+                    <p>
+                        Loading kitchen tools...
+                    </p>
+                </div>
+
+
+                <div id="productGrid" class="product-grid"></div>
+
+
+                <div id="emptyMessage" class="empty-message hidden">
+                    Không tìm thấy sản phẩm.
+                </div>
+
+            </section>
+
+        </main>
+
     </div>
 
+
+    <div id="productModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <button id="closeModal" class="close-modal">
+                ×
+            </button>
+
+            <img id="modalImage" src="" alt="Product">
+
+            <div class="modal-info">
+
+                <span id="modalCategory" class="modal-category">
+                    Kitchen
+                </span>
+
+                <h2 id="modalTitle">
+                    Product
+                </h2>
+
+                <p id="modalDescription">
+                </p>
+
+                <div class="modal-price">
+
+                    <span>
+                        Price
+                    </span>
+
+                    <strong id="modalPrice">
+                        $0
+                    </strong>
+
+                </div>
+
+                <div class="modal-shop-price">
+
+                    <span>
+                        Coins
+                    </span>
+
+                    <strong id="modalShopPrice">
+                        0
+                    </strong>
+
+                </div>
+
+                <div class="purchase-buttons">
+
+                    <button id="buyRealMoneyBtn" class="buy-button real-money-button">
+                        💵 BUY
+                    </button>
+
+                    <button id="buyCoinBtn" class="buy-button coin-button">
+                        🪙 BUY
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="successModal" class="modal hidden">
+
+        <div class="success-box">
+
+            <div class="success-icon">
+                🎉
+            </div>
+
+            <h2>
+                Purchase Successful!
+            </h2>
+
+            <p id="purchaseMessage">
+                Bạn đã mua sản phẩm.
+            </p>
+
+            <button id="successClose" class="buy-button">
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+
     <footer class="footer">
-        <h2>CookBook</h2>
-        <p>Chia sẻ công thức, khám phá món ăn.</p>
-        <p>© 2026 CookBook. All rights reserved.</p>
-        <p>If you need help or need more information phone number *********** or send emails to email
-            **********@gmail.com</p>
+
+        <h2>
+            CookBook
+        </h2>
+
+        <p>
+            Chia sẻ công thức, khám phá món ăn.
+        </p>
+
+        <p>
+            © 2026 CookBook. All rights reserved.
+        </p>
+
+        <p>
+            If you need help or need more information
+            phone number *********** or send emails to
+            email **********@gmail.com
+        </p>
+
     </footer>
 
 
     <script src="config.js"></script>
     <script src="Shop.js"></script>
+
 </body>
 
 </html>
